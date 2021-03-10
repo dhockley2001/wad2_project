@@ -1,3 +1,6 @@
 from django.contrib import admin
+from filmfanatics.models import Genre, Film, Account, Review
 
-# Register your models here.
+admin.site.register(Genre)
+admin.site.register(Account)
+admin.site.register(Film)
