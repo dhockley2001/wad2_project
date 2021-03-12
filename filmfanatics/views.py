@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 
 def home(request):
@@ -140,6 +141,21 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect(reverse('filmfanatics: home'))
+
+def trending(request):
+
+    trending_films = Film.objects.order_by('-views')[:10]
+
+    return render(request, 'filmfanatics/trending.html', context={'trending_films': trending_films})
+
+
+
+
+
+
+
+
+
 
 
 
