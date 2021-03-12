@@ -25,7 +25,7 @@ SECRET_KEY = '4+&#8)_lk-qaqaz!)#60+olu%t)1a*+upx(*%4%clxe-9%$=vn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dhockley2001.pythonanywhere.com']
+ALLOWED_HOSTS = ['dhockley2001.pythonanywhere.com'], ['LianaFarid.pythonanywhere.com'],
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'filmfanatics',
 ]
 
 MIDDLEWARE = [
