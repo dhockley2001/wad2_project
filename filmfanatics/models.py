@@ -32,6 +32,11 @@ class Film(models.Model):
     release = models.DateField()
     views = models.IntegerField(default=0)
     average_rating = models.PositiveIntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title + " (" + self.release.year + ")")
+        super(Film, self).save(*args, **kwargs)
 
     def __str__(self):
         return  self.title + " (" + self.release.year + ")"
@@ -60,6 +65,16 @@ class Review(models.Model):
     def __str__(self):
         return self.account + " (" + self.posted_at + ")"
 
+class View(models.Model):
+
+    film = models.ForeignKey(Film, on_delete=models.CASCADE)
+
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    @classmethod
+    def create(cls, user, film):
+        view = cls(user=user, film=film)
+        return view
 
 
 
