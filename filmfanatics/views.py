@@ -12,6 +12,7 @@ def home(request):
 
     genre_list = Genre.objects.order_by('name')
 
+    
     context_dict = {}
     context_dict['genres'] = genre_list
 
