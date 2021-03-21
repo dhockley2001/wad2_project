@@ -18,13 +18,12 @@ from django.urls import path
 from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
-from filmfanatics import home
+from filmfanatics import views
 
 app_name = 'filmfanatics'
 
 urlpatterns = [
-    path('', views.home, name = 'home'),
-    path('filmfanatics/', include('filmfanatics.urls')),
+    path('', include('filmfanatics.urls')),
     path('admin/', admin.site.urls),
-    path('login/', views.user_login, name='login'),
+    
 ]

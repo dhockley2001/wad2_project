@@ -10,7 +10,7 @@
     {% if user.is_authenticated %}
         Welcome back {{ user.username }}!
         <div style="text-align: end; padding: 25px;">
-          <a class="btn btn-outline-info" href="/logout/" role="button">Logout</a>
+          <a class="btn btn-outline-info" href="{% url 'filmfanatics:logout' %}" role="button">Logout</a>
         </div>
     {% else %}
     <div style="text-align: end; padding: 25px;">

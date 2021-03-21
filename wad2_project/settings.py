@@ -24,10 +24,9 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 SECRET_KEY = '4+&#8)_lk-qaqaz!)#60+olu%t)1a*+upx(*%4%clxe-9%$=vn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True    
 
-ALLOWED_HOSTS = ['dhockley2001.pythonanywhere.com'], ['LianaFarid.pythonanywhere.com'],
-
+ALLOWED_HOSTS = ['127.0.0.1', 'dhockley2001.pythonanywhere.com', 'LianaFarid.pythonanywhere.com',]
 
 # Application definition
 
@@ -40,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'filmfanatics',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -9,6 +9,7 @@ from datetime import datetime
 
 
 def home(request):
+    print("hello")
 
     genre_list = Genre.objects.order_by('name')
 

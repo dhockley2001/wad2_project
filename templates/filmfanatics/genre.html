@@ -2,10 +2,26 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Selected Genre
+    Genre
 {% endblock %}
 
 {% block body_block %}
+<div>
+    {% if genre %}
+    <h1>{{ genre.name }}</h1> 
+    <ul>
+    {% for page in pages %}
+    <li><a href="{{ page.url }}">{{ page.title }}</a></li> {% endfor %}
+    </ul>
+    {% else %}
+    <strong>No pages currently in category.</strong> {% endif %}
+    {% else %}
+    The specified category does not exist.
+    {% endif %}
+</div>
+    
+
+
 
 
 {% endblock %}
