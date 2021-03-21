@@ -2,24 +2,25 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Genre
+    {{ genre.name }}
 {% endblock %}
 
 {% block body_block %}
 <div>
     {% if genre %}
-    <h1>{{ genre.name }}</h1> 
+    <h1>{{ genre.name }}</h1>
     <ul>
-    {% for page in pages %}
-    <li><a href="{{ page.url }}">{{ page.title }}</a></li> {% endfor %}
+    {% for film in films %}
+    <li><a href="{{ page.url }}">{{ film.title }}</a></li> {% endfor %}
     </ul>
     {% else %}
-    <strong>No pages currently in category.</strong> {% endif %}
+    <strong>No films currently in genre.</strong>
+    {% endif %}
     {% else %}
-    The specified category does not exist.
+    The specified genre does not exist.
     {% endif %}
 </div>
-    
+
 
 
 

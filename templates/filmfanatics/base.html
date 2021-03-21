@@ -1,45 +1,40 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-{% load filmfanatics_template_tags %}
+
 
 <html>
     <head>
-        
+
         <title>
-            Filmfanatics
+            FilmFanatics
 
             {% block title_block %}
             {% endblock %}
-            </title>
+           </title>
 
         <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
     </head>
 
 
     <body>
-        <figure class="text-center"> 
+        <figure class="text-center">
             <h1 class="display-1" >Film Fanatics</h1>
         </figure>
-        
+
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll mx-auto nav-fill" style="--bs-scroll-height: 100px;">
         <li class="nav-item ">
-
-          <a class="nav-link active" aria-current="page" href="/home/">Home</a>
+          <a class="nav-link active" aria-current="page" href="filmfanatics:home">Home</a>
+        <li class="nav-item">
+          <a class="nav-link" href="filmfanatics:trending">Trending</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/genre/">Genre</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/trending/">Trending</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/contact-us/">Contact Us</a>
+          <a class="nav-link" href="filmfanatics:contact_us">Contact Us</a>
         </li>
 
       </ul>
@@ -52,7 +47,7 @@
 </nav>
 
 
-  
+
 </div>
 
           {% block body_block %}

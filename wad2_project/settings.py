@@ -16,6 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -24,9 +25,10 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 SECRET_KEY = '4+&#8)_lk-qaqaz!)#60+olu%t)1a*+upx(*%4%clxe-9%$=vn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True    
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'dhockley2001.pythonanywhere.com', 'LianaFarid.pythonanywhere.com',]
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Application definition
 
@@ -56,7 +58,7 @@ ROOT_URLCONF = 'wad2_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR],
+        'DIRS': [TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media'
             ],
         },
     },
@@ -101,6 +104,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Login
+
+LOGIN_URL = 'filmfanatics:login'
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -121,3 +129,9 @@ USE_TZ = True
 
 STATICFILES_DIRS = [STATIC_DIR, ]
 STATIC_URL = '/static/'
+
+# Media files
+
+MEDIA_ROOT = MEDIA_DIR
+
+MEDIA_URL = '/media/'
