@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from datetime import datetime, time, date
 
 class Genre(models.Model):
 
@@ -29,17 +30,22 @@ class Film(models.Model):
     cast = models.TextField()
     picture = models.ImageField(upload_to='film_images')
     synopsis = models.TextField()
-    release = models.DateField()
+    release = models.DateField(null=True)
     views = models.IntegerField(default=0)
-    average_rating = models.PositiveIntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
-    slug = models.SlugField(unique=True)
+    average_rating = models.PositiveIntegerField(default=3, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    review_number = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title + " (" + self.release.year + ")")
+        self.review_number = Review.objects.filter(film = self).count()
+        if self.review_number != 0:
+            count = 0
+            for review in Review.objects.filter(film=self):
+                count += review.rating
+            self.average_rating = count // self.review_number
         super(Film, self).save(*args, **kwargs)
 
     def __str__(self):
-        return  self.title + " (" + self.release.year + ")"
+        return self.title
 
 class Account(models.Model):
 

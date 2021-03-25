@@ -14,6 +14,7 @@
         <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 
     </head>
 
@@ -26,6 +27,7 @@
         </figure>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<<<<<<< HEAD
           <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarScroll">
               <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll mx-auto nav-fill" style="--bs-scroll-height: 100px;">
@@ -55,6 +57,35 @@
 
       <div>
         {% block body_block %}
+=======
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll mx-auto nav-fill" style="--bs-scroll-height: 100px;">
+        <li class="nav-item ">
+          <a class="nav-link active" aria-current="page" href="{% url 'filmfanatics:home' %}">Home</a>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'filmfanatics:trending' %}">Trending</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'filmfanatics:contact_us' %}">Contact Us</a>
+        </li>
+
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit" style="color: black;">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+
+</div>
+
+          {% block body_block %}
+          This will be overriden when it gets extended
+>>>>>>> 8938dfc9bcc324da6cc894dde32f956bdc7dd9e3
         {% endblock %}
       </div>
       
