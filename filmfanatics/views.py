@@ -1,21 +1,22 @@
 from filmfanatics.forms import ReviewForm, UserForm, AccountForm
 from filmfanatics.models import Genre, Film, Account, Review
 from django.shortcuts import render, redirect
+from django.core import serializers
 from django.urls import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+import random
 
 
 def home(request):
-    print("hello")
 
     genre_list = Genre.objects.order_by('name')
 
     context_dict = {}
     context_dict['genres'] = genre_list
-    
+
 
     response = render(request, 'filmfanatics/home.html' , context=context_dict)
     return response
@@ -151,6 +152,15 @@ def trending(request):
     return render(request, 'filmfanatics/trending.html', context={'trending_films': trending_films})
 
 
+def get_random_film(request):
+
+    if request.is_ajax and request.method == "GET":
+        films = Film.objects.all()
+        random_film = random.choice(films)
+        random_film = serializers.serialize('json', [ random_film, ])
+        return JsonResponse({"random_film":random_film}, status = 200)
+    else:
+        return JsonResponse({}, status = 400)
 
 
 
