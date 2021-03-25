@@ -1,13 +1,12 @@
-{% load staticfiles %}
 <!DOCTYPE html>
+{% load staticfiles %}
 
 
 <html>
     <head>
 
         <title>
-            FilmFanatics
-
+          Film Fanatics - 
             {% block title_block %}
             {% endblock %}
            </title>
@@ -18,6 +17,8 @@
 
     </head>
 
+    
+
 
     <body>
         <figure class="text-center">
@@ -25,34 +26,38 @@
         </figure>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <div class="collapse navbar-collapse" id="navbarScroll">
-      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll mx-auto nav-fill" style="--bs-scroll-height: 100px;">
-        <li class="nav-item ">
-          <a class="nav-link active" aria-current="page" href="filmfanatics:home">Home</a>
-        <li class="nav-item">
-          <a class="nav-link" href="filmfanatics:trending">Trending</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="filmfanatics:contact_us">Contact Us</a>
-        </li>
+          <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarScroll">
+              <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll mx-auto nav-fill" style="--bs-scroll-height: 100px;">
+                
+                <li class="nav-item ">
+                  <a class="nav-link active" aria-current="page" href="filmfanatics:home">Home</a>
+                </li>
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="filmfanatics:trending">Trending</a>
+                </li>
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="filmfanatics:contact_us">Contact Us</a>
+                </li>
 
-      </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit" style="color: black;">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
+              </ul>
 
+              <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit" style="color: black;">Search</button>
+              </form>
+      
+            </div>
+          </div>
+        </nav>
 
-
-</div>
-
-          {% block body_block %}
-          This will be overriden when it gets extended
+      <div>
+        {% block body_block %}
         {% endblock %}
+      </div>
+      
 
     </body>
 
