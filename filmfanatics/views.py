@@ -97,7 +97,7 @@ def account(request):
     context_dict['saved_films'] = saved_films
     context_dict['created_reviews'] = created_reviews
 
-    return render(request, 'fimfanatics/account.html', context=context_dict)
+    return render(request, 'filmfanatics/account.html', context=context_dict)
 
 @login_required
 def write_review(request):
@@ -143,7 +143,7 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect(reverse('filmfanatics: home'))
+    return redirect(reverse('filmfanatics:home'))
 
 def trending(request):
 

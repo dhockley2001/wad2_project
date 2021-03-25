@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
-<<h1>Film Fanatics</h1>
+<h1>Film Fanatics</h1>
 <form id="login_form" method="post" action="{% url 'filmfanatics:login' %}">
     {% csrf_token %}
     Username: <input type="text" name="username" value="" size="50" />
@@ -18,7 +18,8 @@
 
 <div>
     <h2>Not registered ?</h2>
-    <button type="button" class="btn btn-outline-info" href = "filmfanatics:sign_up"> Register</button>
+    <a class="btn btn-outline-info" href="{% url 'filmfanatics:sign_up' %}" role="button">Register</a>
+
 
 </div>
 

@@ -1,1 +1,27 @@
 {% extends 'filmfanatics/base.html' %}
+
+{% block title_block %}
+    Account
+{% endblock %}
+
+{% block body_block %}
+<h1 style="text-align: center;"> My account </h1> 
+
+<div class="container">
+    <div class="row justify-content-start">
+      <div class="col-4">
+        {% if user.account.picture %}
+            <img src="{{ user.account.picture.url }}" width="240">
+        {% endif %}
+
+      </div>
+      <div class="col-4" >
+          
+        <h3> {{ user.username }} </h3>
+        <p> Bio : {{ user.account.bio }}</p>
+        <p> My saved films : {{user.account.save_films }} </p>
+
+      </div>
+    </div>
+
+{% endblock %}

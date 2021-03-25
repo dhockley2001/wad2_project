@@ -6,20 +6,21 @@
 {% endblock %}
 
 {% block body_block %}
+
 <h1>Register for Film Fanatics</h1>
-{% if registered %}
-<strong>Thank you for registering</strong>
-<a href="{% url 'filmfanatics:home' %}">Return to the homepage.</a><br />
-{% else %}
-<strong>Register Here</strong><br />
-<form id="user_form" method="post" action="{% url 'filmfanatics:sign_up' %}"  enctype="multipart/form-data">
+    {% if registered %}
+        <strong>Thank you for registering</strong>
+            <a href="{% url 'filmfanatics:home' %}">Return to the homepage.</a><br />
+    {% else %}
+        <strong>Register Here</strong><br />
+        <form id="signup_form" method="post" action="{% url 'filmfanatics:sign_up' %}"  enctype="multipart/form-data">
+        {% csrf_token %}
 
-    {% csrf_token %}
-
-    {{ user_form.as_p }}
-    {{ account_form.as_p }}
+        {{ user_form.as_p }}
+        {{ account_form.as_p }}
 
     <input type="submit" name="submit" value="Register" />
-</form>
-{% endif %}
+        </form>
+    {% endif %}
+    
 {% endblock %}

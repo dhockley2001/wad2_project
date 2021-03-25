@@ -52,7 +52,6 @@ class Account(models.Model):
     BIO_MAX_LENGTH = 500
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
     bio = models.TextField(blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
     saved_films = models.ManyToManyField(Film)
