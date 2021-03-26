@@ -13,9 +13,11 @@ import random
 def home(request):
 
     genre_list = Genre.objects.order_by('name')
+    recently_released = Film.objects.order_by('-release')[:5]
 
     context_dict = {}
     context_dict['genres'] = genre_list
+    context_dict['recently_released'] = recently_released
 
 
     response = render(request, 'filmfanatics/home.html' , context=context_dict)
