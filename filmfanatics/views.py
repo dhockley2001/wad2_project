@@ -155,14 +155,27 @@ def trending(request):
 
 
 def get_random_film(request):
-
+    print("Hello")
     if request.is_ajax and request.method == "GET":
+
         films = Film.objects.all()
         random_film = random.choice(films)
         random_film = serializers.serialize('json', [ random_film, ])
         return JsonResponse({"random_film":random_film}, status = 200)
     else:
         return JsonResponse({}, status = 400)
+
+def get_film(request):
+
+    if request.is_ajax and request.method == "POST":
+
+        filmName = request.POST
+        film = Film.objects.get(title=filmName)
+        film = serializers.serialize('json', [ film, ])
+        return JsonResponse({"film": film}, status=200)
+    else:
+        return JsonResponse({}, status=400)
+
 
 
 

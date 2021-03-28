@@ -5,6 +5,8 @@
     Home
 {% endblock %}
 
+
+
 {% block body_block %}
 <div>
     {% if user.is_authenticated %}
@@ -36,7 +38,7 @@
             {% if genres %}
             <ul>
                 {% for g in genres %}
-                    <li> <a href="{% url 'filmfanatics:genre' g.slug %}"> {{ g }} </a> </li>
+                    <li> <a href="{% url 'filmfanatics:genre' g.slug %}"> {{ g }} </a> <img style="float:right" width="20" height="20" src="{{ g.graphic }}" alt="{{ g.name }}"></li>
 
                 {% endfor %}
             </ul>
@@ -51,27 +53,27 @@
             <div class="carousel-inner">
               <div class="carousel-item active">
                   {% with film=recently_released.0 %}
-                <img src="{{ film.picture }}" class="d-block w-100" alt="{{ film.title }}">
+                <img id="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}">
                     {% endwith %}
               </div>
               <div class="carousel-item">
                   {% with film=recently_released.1 %}
-                <img src="{{ film.picture }}" class="d-block w-100" alt="{{ film.title }}">
+                <img id="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}">
                     {% endwith %}
               </div>
               <div class="carousel-item">
                   {% with film=recently_released.2 %}
-                <img src="{{ film.picture }}" class="d-block w-100" alt="{{ film.title }}">
+                <img id="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}">
                     {% endwith %}
               </div>
               <div class="carousel-item">
                   {% with film=recently_released.3 %}
-                <img src="{{ film.picture }}" class="d-block w-100" alt="{{ film.title }}">
+                <img id="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}">
                     {% endwith %}
               </div>
               <div class="carousel-item">
                   {% with film=recently_released.4 %}
-                <img src="{{ film.picture }}" class="d-block w-100" alt="{{ film.title }}">
+                <img id="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}">
                     {% endwith %}
               </div>
             </div>
@@ -92,17 +94,17 @@
     </div>
   </div>
 
-  <div class="modal fade" id="randModal" tabindex="-1" role="dialog" aria-labelledby="randModalLabel" aria-hidden="true">
+  <div class="modal fade" id="filmModal" tabindex="-1" role="dialog" aria-labelledby="filmModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="randModalLabel">Film Title</h5>
+        <h5 class="modal-title" id="filmModalLabel">Film Title</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-
+        Body
         </div>
     </div>
 
@@ -112,34 +114,9 @@
   </div>
 </div>
 
-  <script>
 
-    $("#randButton").onclick(function (e) {
-        e.preventDefault();
-        $.ajax({
-            type: 'GET',
-            url: "{% url 'filmfanatics:get_random_film' %}",
-            success: function (json) {
-                // open and change modal
-                    var title = json["title"]
-                    var director = json["director"]
-                    var cast = json["cast"]
-                    var picture = json["picture"]
-                    var synopsis = json["synopsis"]
-                    var release = json["release"]
-                    var review_number = json["review_number"]
-                    var average_rating = json["average_rating"]
-                    var modal = document.getElementById("randModal")
-                    modal.find('.modal-title').text(title)
-                    modal.find('.modal-body input').val(recipient)
-                }
-            },
-            error: function (response) {
-                console.log(response)
-            }
-        })
-    })
-</script>
+
+
 {% endblock %}
 
 

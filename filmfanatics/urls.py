@@ -13,5 +13,6 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('trending/', views.trending, name='trending'),
     path('get/ajax/get_random_film/', views.get_random_film, name = 'get_random_film'),
+    path('post/ajax/get_film/', views.get_film, name = 'get_film'),
 ]
 
