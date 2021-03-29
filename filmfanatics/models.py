@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
-from datetime import datetime, time, date
+from datetime import datetime, timezone
 
 class Genre(models.Model):
 
@@ -32,17 +32,9 @@ class Film(models.Model):
     synopsis = models.TextField()
     release = models.DateField(null=True)
     views = models.IntegerField(default=0)
+    reset_at = models.DateTimeField(default=datetime.now(timezone.utc))
     average_rating = models.PositiveIntegerField(default=3, validators=[MinValueValidator(0), MaxValueValidator(5)])
     review_number = models.PositiveIntegerField(default=0)
-
-    def save(self, *args, **kwargs):
-        self.review_number = Review.objects.filter(film = self).count()
-        if self.review_number != 0:
-            count = 0
-            for review in Review.objects.filter(film=self):
-                count += review.rating
-            self.average_rating = count // self.review_number
-        super(Film, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -63,23 +55,23 @@ class Review(models.Model):
 
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
-    posted_at = models.DateField()
+    posted_at = models.DateTimeField()
     comment = models.TextField()
     rating = models.PositiveIntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
+
+    #update film stats when review is made
+    def save(self, *args, **kwargs):
+        self.film.review_number = Review.objects.filter(film = self.film).count()
+        if self.film.review_number != 0:
+            count = 0
+            for review in Review.objects.filter(film=self.film):
+                count += review.rating
+            self.film.average_rating = count // self.film.review_number
+        super(Film, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.account + " (" + self.posted_at + ")"
 
-class View(models.Model):
-
-    film = models.ForeignKey(Film, on_delete=models.CASCADE)
-
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    @classmethod
-    def create(cls, user, film):
-        view = cls(user=user, film=film)
-        return view
 
 
 

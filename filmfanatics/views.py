@@ -1,13 +1,12 @@
 from filmfanatics.forms import ReviewForm, UserForm, AccountForm
 from filmfanatics.models import Genre, Film, Account, Review
 from django.shortcuts import render, redirect
-from django.core import serializers
 from django.urls import reverse
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from datetime import datetime
+from datetime import datetime, timezone
 import random
 import json
 
@@ -161,6 +160,11 @@ def get_random_film(request):
 
         films = Film.objects.all()
         film = random.choice(films)
+        # check if the view counter needs reset
+        check_reset(film)
+        film.views += 1
+        film.save()
+
         response_data = {}
 
         response_data['title'] = film.title
@@ -168,6 +172,7 @@ def get_random_film(request):
         response_data['cast'] = film.cast
         response_data['picture'] = str(film.picture)
         response_data['synopsis'] = film.synopsis
+        response_data['views'] = film.views
         response_data['review_number'] = film.review_number
         response_data['average_rating'] = film.average_rating
 
@@ -187,12 +192,18 @@ def get_film(request):
 
         filmName = request.POST.get('film')
         film = Film.objects.get(title=filmName)
+        # check if the view counter needs reset
+        check_reset(film)
+        film.views += 1
+        film.save()
+
 
         response_data['title'] = film.title
         response_data['director'] = film.director
         response_data['cast'] = film.cast
         response_data['picture'] = str(film.picture)
         response_data['synopsis'] = film.synopsis
+        response_data['views'] = film.views
         response_data['review_number'] = film.review_number
         response_data['average_rating'] = film.average_rating
 
@@ -200,13 +211,12 @@ def get_film(request):
     else:
         return HttpResponse(json.dumps({"error": "Could not get film"}),content_type="application/json")
 
+def check_reset(film):
 
-
-
-
-
-
-
+    if (datetime.now(timezone.utc) - film.reset_at).days > 0:
+        film.views = 0
+        film.reset_at = datetime.now()
+        film.save()
 
 
 

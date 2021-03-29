@@ -15,6 +15,7 @@ $( document ).ready(function() {
                 var picture = json["picture"]
                 var synopsis = json["synopsis"]
                 var release = json["release"]
+                var views = json["views"]
                 var review_number = json["review_number"]
                 var average_rating = json["average_rating"]
                 var modal = $("#filmModal")
@@ -39,6 +40,7 @@ $( document ).ready(function() {
                     var cast = json["cast"]
                     var picture = json["picture"]
                     var synopsis = json["synopsis"]
+                    var views = json["views"]
                     var release = json["release"]
                     var review_number = json["review_number"]
                     var average_rating = json["average_rating"]
