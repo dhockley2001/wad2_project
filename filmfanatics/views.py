@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 import random
 
@@ -165,11 +166,12 @@ def get_random_film(request):
     else:
         return JsonResponse({}, status = 400)
 
+@csrf_exempt
 def get_film(request):
 
     if request.is_ajax and request.method == "POST":
 
-        filmName = request.POST
+        filmName = request.POST['film']
         film = Film.objects.get(title=filmName)
         film = serializers.serialize('json', [ film, ])
         return JsonResponse({"film": film}, status=200)
