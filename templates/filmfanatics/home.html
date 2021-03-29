@@ -53,27 +53,27 @@
             <div class="carousel-inner">
               <div class="carousel-item active">
                   {% with film=recently_released.0 %}
-                <img id="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}">
+                <img class="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
                     {% endwith %}
               </div>
               <div class="carousel-item">
                   {% with film=recently_released.1 %}
-                <img id="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}" data-csrf="{{ csrf_token }}">
+                <img class="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
                     {% endwith %}
               </div>
               <div class="carousel-item">
                   {% with film=recently_released.2 %}
-                <img id="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}" data-csrf="{{ csrf_token }}">
+                <img class="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
                     {% endwith %}
               </div>
               <div class="carousel-item">
                   {% with film=recently_released.3 %}
-                <img id="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}" data-csrf="{{ csrf_token }}">
+                <img class="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
                     {% endwith %}
               </div>
               <div class="carousel-item">
                   {% with film=recently_released.4 %}
-                <img id="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}" data-csrf="{{ csrf_token }}">
+                <img class="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
                     {% endwith %}
               </div>
             </div>

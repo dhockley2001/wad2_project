@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 import random
+import json
 
 
 def home(request):
@@ -156,27 +157,48 @@ def trending(request):
 
 
 def get_random_film(request):
-    print("Hello")
     if request.is_ajax and request.method == "GET":
 
         films = Film.objects.all()
-        random_film = random.choice(films)
-        random_film = serializers.serialize('json', [ random_film, ])
-        return JsonResponse({"random_film":random_film}, status = 200)
+        film = random.choice(films)
+        response_data = {}
+
+        response_data['title'] = film.title
+        response_data['director'] = film.director
+        response_data['cast'] = film.cast
+        response_data['picture'] = str(film.picture)
+        response_data['synopsis'] = film.synopsis
+        response_data['review_number'] = film.review_number
+        response_data['average_rating'] = film.average_rating
+
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
     else:
-        return JsonResponse({}, status = 400)
+        return HttpResponse(
+            json.dumps({"error": "Could not get film"}),
+            content_type="application/json"
+        )
 
 @csrf_exempt
 def get_film(request):
 
     if request.is_ajax and request.method == "POST":
 
-        filmName = request.POST['film']
+        response_data = {}
+
+        filmName = request.POST.get('film')
         film = Film.objects.get(title=filmName)
-        film = serializers.serialize('json', [ film, ])
-        return JsonResponse({"film": film}, status=200)
+
+        response_data['title'] = film.title
+        response_data['director'] = film.director
+        response_data['cast'] = film.cast
+        response_data['picture'] = str(film.picture)
+        response_data['synopsis'] = film.synopsis
+        response_data['review_number'] = film.review_number
+        response_data['average_rating'] = film.average_rating
+
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
     else:
-        return JsonResponse({}, status=400)
+        return HttpResponse(json.dumps({"error": "Could not get film"}),content_type="application/json")
 
 
 

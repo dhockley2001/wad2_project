@@ -1,14 +1,13 @@
 
 $( document ).ready(function() {
     console.log( "ready!" );
-      $("#filmLink").on('click',function (e) {
-          const img = document.querySelector('#filmLink');
-            var url = img.dataset.url
-            var csrf = img.dataset.csrf
+      $( document ).on('click', '.filmLink', function (e) {
+            var url = $(this).attr("data-url");
+            var name = $(this).attr("alt")
       $.ajax({
           type: 'POST',
           url: url,
-          data: $(this).alt,
+          data: {film: name},
           success: function (json) {
                 var title = json["title"]
                 var director = json["director"]
@@ -29,8 +28,7 @@ $( document ).ready(function() {
       })
 
     $('#randButton').on('click',function (e) {
-            const button = document.querySelector('#randButton');
-            var url = button.dataset.url
+            var url = $(this).attr("data-url");
         $.ajax({
             type: 'GET',
             url: url,
@@ -44,9 +42,9 @@ $( document ).ready(function() {
                     var release = json["release"]
                     var review_number = json["review_number"]
                     var average_rating = json["average_rating"]
-                    var elt = $('#filmModal .modal-title')
-                    window.alert(elt)
-                    $('#filmModal').modal('show');
+                    var modal = $("#filmModal")
+                    modal.find('.modal-title').text(title);
+                    $('#filmModal').modal('toggle');
                 },
             error: function (response) {
                 console.log(response)
