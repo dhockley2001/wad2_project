@@ -15,20 +15,18 @@
         <div class="d-flex flex-column">
             {% for film in films %}
               {% if film %}
-              <div class="p-2"> {{ film.title }}</a>
-                
-              <img class="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
+              <div class="p-2"> {{ film.title }} </a>
+              <br> <img class="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
+
             </div>  
-              {% endif %}          
+              {% endif %}
             {% endfor %}
             {% else %}
                <strong>No films currently in genre.</strong>
-            {% endif %}    
+      {% endif %}    
     </div>  
 
-             
-            
-        
+ 
         <div class="modal fade" id="filmModal" tabindex="-1" role="dialog" aria-labelledby="filmModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -39,6 +37,11 @@
               </div>
         
               <div class="modal-body">
+                {% for film in films %}
+                  {% if film %}
+                    {{ film.director }}
+                  {% endif %}
+                {% endfor %}
                 
                 
                 </div>
@@ -46,6 +49,9 @@
             
         
               <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                  Close
+                </button>
               </div>
             </div>
           </div>   
