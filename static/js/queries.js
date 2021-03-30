@@ -20,6 +20,11 @@ $( document ).ready(function() {
                 var average_rating = json["average_rating"]
                 var modal = $("#filmModal")
                 modal.find('.modal-title').text(title);
+                
+                modal.find('.views').text(views);
+                modal.find('.director').text(director);
+                modal.find('.cast').text(cast);
+                modal.find('.synopsis').text(synopsis);
                 $('#filmModal').modal('toggle');
           },
         error: function (response) {
