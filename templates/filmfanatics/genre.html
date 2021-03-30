@@ -6,19 +6,66 @@
 {% endblock %}
 
 {% block body_block %}
-<div>
-    {% if genre %}
-        <h1>{{ genre.name }}</h1>
-        <ul>
-            {% for film in films %}
-            <li><a href="{{ page.url }}">{{ film.title }}</a></li> {% endfor %}
-        </ul>
+<h1 style="text-align: center;" >{{ genre.name }}</h1>
 
+
+<div class="d-flex justify-content-center">
+    {% if genre %}
+        
+        <div class="d-flex flex-column">
+            {% for film in films %}
+            <div class="p-2"> {{ film.title }}</a>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal">
+                    More details
+                  </button> 
+                <br> <img src="{{ film.picture }}" class="d-block w-100" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
+            </div>            
+            {% endfor %}
     {% else %}
         <strong>No films currently in genre.</strong>
-    {% endif %}
-
-
+    {% endif %}    
+        </div>      
 </div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+
+            <h5 class="modal-title" id="filmModalLabel">Film Title</h5>
+          
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {% for film in films %}
+            {% if film == film %}
+                {{ film.synopsis}}
+                {{ film.release }}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
 
 {% endblock %}
