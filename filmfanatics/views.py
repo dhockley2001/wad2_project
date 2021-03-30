@@ -1,6 +1,7 @@
 from filmfanatics.forms import ReviewForm, UserForm, AccountForm
 from filmfanatics.models import Genre, Film, Account, Review
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
@@ -153,6 +154,15 @@ def trending(request):
     trending_films = Film.objects.order_by('-views')[:10]
 
     return render(request, 'filmfanatics/trending.html', context={'trending_films': trending_films})
+
+def search(request):
+
+    query = request.GET.get('search')
+
+    if query:
+        films = Film.objects.filter(Q(title__icontains=query))
+
+    return render(request, 'filmfanatics/search.html', {'search_query': query, 'searched_films':films})
 
 
 def get_random_film(request):
