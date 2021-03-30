@@ -43,7 +43,7 @@ def show_genre(request, genre_name_slug):
 
     except Genre.DoesNotExist:
 
-        context_dict['category'] = None
+        context_dict['genre'] = None
         context_dict['films'] = None
 
     return render(request, 'filmfanatics/genre.html', context=context_dict)
