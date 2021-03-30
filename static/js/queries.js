@@ -21,6 +21,7 @@ $( document ).ready(function() {
                 var reviews = json["reviews"]
                 var modal = $("#filmModal")
                 modal.find('.modal-title').text(title);
+                modal.find('.modal-body').text(director);
                 $('#filmModal').modal('toggle');
           },
         error: function (response) {
