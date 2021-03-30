@@ -165,6 +165,7 @@ def get_random_film(request):
         film.views += 1
         film.save()
 
+
         response_data = {}
 
         response_data['title'] = film.title
@@ -175,6 +176,12 @@ def get_random_film(request):
         response_data['views'] = film.views
         response_data['review_number'] = film.review_number
         response_data['average_rating'] = film.average_rating
+
+        getReviews = Review.objects.filter(film=film)
+
+        reviews = [ review.as_dict() for review in getReviews ]
+
+        response_data['reviews'] = reviews
 
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     else:
@@ -206,6 +213,12 @@ def get_film(request):
         response_data['views'] = film.views
         response_data['review_number'] = film.review_number
         response_data['average_rating'] = film.average_rating
+
+        getReviews = Review.objects.filter(film=film)
+
+        reviews = [ review.as_dict() for review in getReviews ]
+
+        response_data['reviews'] = reviews
 
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     else:

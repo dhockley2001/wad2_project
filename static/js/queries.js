@@ -18,6 +18,7 @@ $( document ).ready(function() {
                 var views = json["views"]
                 var review_number = json["review_number"]
                 var average_rating = json["average_rating"]
+                var reviews = json["reviews"]
                 var modal = $("#filmModal")
                 modal.find('.modal-title').text(title);
                 $('#filmModal').modal('toggle');
@@ -44,6 +45,7 @@ $( document ).ready(function() {
                     var release = json["release"]
                     var review_number = json["review_number"]
                     var average_rating = json["average_rating"]
+                    var reviews = json["reviews"]
                     var modal = $("#filmModal")
                     modal.find('.modal-title').text(title);
                     $('#filmModal').modal('toggle');

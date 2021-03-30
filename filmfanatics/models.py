@@ -72,6 +72,15 @@ class Review(models.Model):
     def __str__(self):
         return self.account + " (" + self.posted_at + ")"
 
+    def as_dict(self):
+        return {
+            "username": self.account.user.username,
+            "profile_pic": str(self.account.picture),
+            "posted_at": self.posted_at,
+            "comment": self.comment,
+            "rating": self.rating,
+        }
+
 
 
 
