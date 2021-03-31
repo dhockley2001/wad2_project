@@ -5,15 +5,51 @@
     Search for: {{ search_query }}
 {% endblock %}
 
+
 {% block body_block %}
 
-    {% if searched_films %}
-        {% for film in searched_films %}
+<div class="container" style="text-align: center;">
+    <div class="row">
+      <div class="col-sm">
+        
+      </div>
+      <div class="col-sm">
+        {% if searched_films %}
+            {% for film in searched_films %}
+                <br>
+                {% if film %} 
+                <h3 style="text-align: center;"> {{ film.title }}</h3>
+                
+                {% if user.is_authenticated %}
+                <a class="btn btn-outline-info" href="#" role="button">Write a review</a>
+                <br>
+                {% endif %}
+                <br> <img class="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
+                <p> Rating : {{ film.average_rating }} &nbsp; Views : {{ film.views }}</p>
+                <p> Release : {{ film.release }}</p>
+                <p> Cast : {{ film.cast }}</p>
+                 Synopsis : {{ film.synopsis }}
+                
+                {% endif %}
+            {% endfor %}
+           
+            {% else %}
+                <strong>No films match this search.</strong>
+            
+            {% endif %}
+      </div>
+      <div class="col-sm">
+        
+      </div>
+    </div>
+  </div>
 
-        {% endfor %}
 
-    {% else %}
-        <strong>No films match this search.</strong>
-    {% endif %}
+
+    
+        
+
+
+    
 
 {% endblock %}

@@ -5,14 +5,39 @@
 {% endblock %}
 
 {% block body_block %}
-<h1 style="text-align: center;"> My account </h1> 
+{% if user.is_authenticated %}
+      <div style="text-align: end; padding: 10px;">
+        <a class="btn btn-outline-info" href="{% url 'filmfanatics:logout' %}" role="button">Logout</a>
+      </div>
+{% endif %}
 
-<div class="container">
+<div class="row justify-content-center">
+  <div class="col-4">
+    <h2> {{ user.username }} <br> </h2>
+  </div>
+  <div class="col-4">
+    
+  </div>
+
+
+<div class="row justify-content-center">
+  <div class="col-4">
+    {% if user.account.picture %}
+      <img src="{{ user.account.picture.url }}" width="240">
+    {% endif %}
+    <p> My saved films : {{user.account.save_films }} </p>
+    
+  </div>
+  <div class="col-4">
+    
+    <p> <strong> Bio : </strong>  <br> {{ user.account.bio }}</p>
+  </div>
+
+
+<!-- <div class="container">
     <div class="row justify-content-start">
       <div class="col-4">
-        {% if user.account.picture %}
-            <img src="{{ user.account.picture.url }}" width="240">
-        {% endif %}
+        
 
       </div>
       <div class="col-4" >
@@ -22,6 +47,6 @@
         <p> My saved films : {{user.account.save_films }} </p>
 
       </div>
-    </div>
+    </div> -->
 
 {% endblock %}

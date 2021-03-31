@@ -10,7 +10,8 @@
 {% block body_block %}
 <div>
     {% if user.is_authenticated %}
-        <h2> <strong> Welcome back {{ user.username }}! </strong></h2>
+        <br> 
+        <h2 class="container" > <strong> Welcome back {{ user.username }}! </strong></h2>
     {% else %}
     <div style="text-align: end; padding: 25px;">
       <a class="btn btn-outline-info" href="{% url 'filmfanatics:login' %}" role="button">Login</a>
@@ -44,8 +45,7 @@
               <div class="d-flex flex-column">
                   {% for g in genres %}
                   <div class="p-2"> <a href="{% url 'filmfanatics:genre' g.slug %}"> {{ g }} </a>
-                  <br> <img width="50" height="50" src="{{ g.graphic }}" alt="{{ g.name }}">
-
+                  <br> <img width="128px" height="128px" src="{{ g.graphic }}" alt="{{ g.name }}">
                   </div>
 
                   {% endfor %}
@@ -118,8 +118,9 @@
       </div>
 
       <div class="modal-body">
-
-        <h5 class="director"></h5>
+        Cast : <p class="cast"></p>
+        Synopsis : <p class="synopsis"> </p>
+        
         </div>
     </div>
 

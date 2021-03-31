@@ -21,15 +21,12 @@ $( document ).ready(function() {
                 var reviews = json["reviews"]
                 var modal = $("#filmModal")
                 modal.find('.modal-title').text(title);
-<<<<<<< HEAD
                 
                 modal.find('.views').text(views);
                 modal.find('.director').text(director);
                 modal.find('.cast').text(cast);
                 modal.find('.synopsis').text(synopsis);
-=======
-                modal.find('.modal-body').text(director);
->>>>>>> 8b69915cd6948057eb1239fa12252fbe25f2bd77
+                
                 $('#filmModal').modal('toggle');
           },
         error: function (response) {
