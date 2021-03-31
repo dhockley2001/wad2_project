@@ -19,16 +19,39 @@ $( document ).ready(function() {
                 var review_number = json["review_number"]
                 var average_rating = json["average_rating"]
                 var reviews = json["reviews"]
+
                 var modal = $("#filmModal")
                 modal.find('.modal-title').text(title);
-                
                 modal.find('.views').text(views);
                 modal.find('.director').text(director);
                 modal.find('.cast').text(cast);
                 modal.find('.synopsis').text(synopsis);
 
-                modal.find('.reviews').text(reviews);
-                
+                $('.panel-body').empty();
+
+                $.each(reviews, function(index, review) {
+                    var firstDiv = $('<div></div>').addClass("media");
+                    firstDiv.appendTo( ".panel-body");
+                    var secondDiv = $('<div></div>').addClass("media-left");
+                    secondDiv.appendTo(firstDiv);
+                    var img = $('<img>').addClass("media-object").css("width","60px").attr('src', review.profile_pic);
+                    img.appendTo(secondDiv);
+                    var thirdDiv = $('<div></div>').addClass("media-body");
+                    thirdDiv.appendTo(firstDiv);
+                    var heading = $('<h4></h4>').addClass("media-heading").text(review.username);
+                    heading.appendTo(thirdDiv);
+                    var paragraph = $('<p></p>').text(review.comment);
+                    paragraph.appendTo(thirdDiv);
+                    var fourthDiv = $('<div></div>').addClass("media-right");
+                    fourthDiv.appendTo(firstDiv);
+                    var i;
+                    for (i = 0; i < review.rating; i++){
+                        var star = $('<span></span>').addClass("fa fa-star checked");
+                        star.appendTo(fourthDiv);
+                    }
+                    firstDiv.append('<br>')
+
+                });
                 $('#filmModal').modal('toggle');
           },
         error: function (response) {
@@ -54,8 +77,40 @@ $( document ).ready(function() {
                     var review_number = json["review_number"]
                     var average_rating = json["average_rating"]
                     var reviews = json["reviews"]
+
                     var modal = $("#filmModal")
                     modal.find('.modal-title').text(title);
+                    modal.find('.views').text(views);
+                    modal.find('.director').text(director);
+                    modal.find('.cast').text(cast);
+                    modal.find('.synopsis').text(synopsis);
+
+                    $('.panel-body').empty();
+
+                    $.each(reviews, function(index, review) {
+                        var firstDiv = $('<div></div>').addClass("media");
+                        firstDiv.appendTo( ".panel-body");
+                        var secondDiv = $('<div></div>').addClass("media-left");
+                        secondDiv.appendTo(firstDiv);
+                        var img = $('<img>').addClass("media-object").css("width","60px").attr('src', review.profile_pic);
+                        img.appendTo(secondDiv);
+                        var thirdDiv = $('<div></div>').addClass("media-body");
+                        thirdDiv.appendTo(firstDiv);
+                        var heading = $('<h4></h4>').addClass("media-heading").text(review.username);
+                        heading.appendTo(thirdDiv);
+                        var paragraph = $('<p></p>').text(review.comment);
+                        paragraph.appendTo(thirdDiv);
+
+                        var fourthDiv = $('<div></div>').addClass("media-right");
+                        fourthDiv.appendTo(firstDiv);
+
+                        var i;
+                        for (i = 0; i < review.rating; i++){
+                            var star = $('<span></span>').addClass("fa fa-star checked");
+                            star.appendTo(fourthDiv);
+                        }
+                        firstDiv.append('<br>')
+                    });
                     $('#filmModal').modal('toggle');
                 },
             error: function (response) {
@@ -64,5 +119,3 @@ $( document ).ready(function() {
         })
     })
 });
-
-

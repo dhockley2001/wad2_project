@@ -7,7 +7,7 @@
 
 {% block body_block %}
 <br>
-<h1 style="text-align: center;"">{{ genre.name }}</h1>
+<h1 style="text-align: center;">{{ genre.name }}</h1>
 
 
 <div class=" d-flex justify-content-center">
@@ -18,9 +18,7 @@
     {% if film %}
     <div class="p-2">
       <h4 style="text-align: center;"> {{ film.title }} </h4>
-      <br> <img class="filmLink" src="{{ film.picture }}" width="256px" height="320px" class="d-block w-100"
-        style="cursor: pointer " alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}"
-        style="text-align: center;">
+      <br> <img class="filmLink" src="{{ film.picture }}" width="256px" height="320px" class="d-block w-100" style="cursor: pointer;text-align: center" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
     </div>
     {% endif %}
     {% endfor %}
@@ -40,7 +38,9 @@
         <div class="modal-header">
 
           <h5 class="modal-title" id="filmModalLabel">Film Title</h5>
-
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
 
         </div>
 
@@ -52,45 +52,7 @@
 
           <div class="panel panel-default">
             <div class="panel-body">
-              <h5> Reviews : </h5>
-              <strong> This is just some random text to see if the scrolling thing works</strong>
-              <br>
-              Pero pusieron la canción, eh, eh, eh
-              Que cantamos bien borrachos
-              Que bailamos bien borrachos
-              Nos besamos bien borrachos los dos
-              Pensaba que te había olvidao, eh
-              Pero pusieron la canción, eh, eh, eh
-              Que cantamos bien borrachos
-              Que bailamos bien borrachos
-              Nos besamos bien borrachos los dos
-              Pensaba que te había olvidao
-              Justo cuando creía
-              Que por comerme a dos o diez, te olvidaría (yeh)
-              Cogí un respiro y me salí de la vía
-              Y como un pendejo, no sabía lo que hacía
-              Nunca lo superé (no), nunca te superé (no)
-              Hasta me aprendí to'a las baladas en inglés (yeh)
-              Respiré y conté hasta tres
-              Eres la fantasía oscura de Kanye West, bebé, ey
-              Hace tiempo lo barato me salió caro (yih)
-              Yo sólo twitteo, balas locas disparo (yih)
-              ¿Cómo olvidar la bellaquera en el carro?
-              ¿A que guió solo?
-              Quién lo diría
-              Que se podría hacer el amor por telepatía
-              La luna está llena, mi cama vacía
-              Lo que yo te haría
-              Si te tuviera de frente la mente te la volaría
-              De noche y de día, de noche y de día
-              You know I'm just a flight away
-              If you wanted you can take a private plane
-              A kilómetros estamos conectando
-              Y me prendes aunque no me estés tocando
-              You know I got a lot to say
-              All these voices in the background of my brain
-              Y me dicen todo lo que estás pensando
-              Me imagino lo que ya estás maquinando
+                <br>
             </div>
           </div>
 
@@ -99,7 +61,7 @@
 
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Close
           </button>
         </div>

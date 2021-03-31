@@ -1,7 +1,7 @@
 h1 {
     text-align: center;
     text-shadow: 2px 2px 5px black;
-    
+
 }
 
 /* navigation bar */
@@ -58,5 +58,9 @@ body {
     padding : 10px;
     overflow: hidden;
     overflow-y: scroll;
+}
+
+.checked {
+  color: orange;
 }
 

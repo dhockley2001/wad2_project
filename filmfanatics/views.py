@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from datetime import datetime, timezone
+from datetime import datetime, timezone, date
 import random
 import json
 
@@ -191,9 +191,10 @@ def get_random_film(request):
 
         reviews = [ review.as_dict() for review in getReviews ]
 
+
         response_data['reviews'] = reviews
 
-        return HttpResponse(json.dumps(response_data), content_type="application/json")
+        return HttpResponse(json.dumps(response_data, default=json_serial), content_type="application/json")
     else:
         return HttpResponse(
             json.dumps({"error": "Could not get film"}),
@@ -230,7 +231,7 @@ def get_film(request):
 
         response_data['reviews'] = reviews
 
-        return HttpResponse(json.dumps(response_data), content_type="application/json")
+        return HttpResponse(json.dumps(response_data, default=json_serial), content_type="application/json")
     else:
         return HttpResponse(json.dumps({"error": "Could not get film"}),content_type="application/json")
 
@@ -240,6 +241,12 @@ def check_reset(film):
         film.views = 0
         film.reset_at = datetime.now()
         film.save()
+
+def json_serial(obj):
+
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError ("Type %s not serializable" % type(obj))
 
 
 
