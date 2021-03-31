@@ -2,65 +2,98 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    {{ genre.name }}
+{{ genre.name }}
 {% endblock %}
 
 {% block body_block %}
-<h1 style="text-align: center;" >{{ genre.name }}</h1>
+<br>
+<h1 style="text-align: center;"">{{ genre.name }}</h1>
 
 
 <div class="d-flex justify-content-center">
   {% if genre %}
-    {% if films %}
-      <div class="d-flex flex-column">
-      {% for film in films %}
-        {% if film %}
-          <div class="p-2"> 
-          <h3 style="text-align: center;"> {{ film.title }}  </h3>
-          <br> <img class="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}" style="text-align: center;">
-          </div>  
-        {% endif %}
-      {% endfor %}
-    {% else %}
-      <strong>No films currently in genre.</strong>
+  {% if films %}
+  <div class="d-flex flex-column">
+    {% for film in films %}
+    {% if film %}
+    <div class="p-2">
+      <h4 style="text-align: center;"> {{ film.title }} </h4>
+      <br> <img class="filmLink" src="{{ film.picture }}" width="256px" height="320px" class="d-block w-100" style="cursor: pointer "
+        alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}" style="text-align: center;">
+    </div>
     {% endif %}
-  {% endif %}
-      </div>
- 
-    
+    {% endfor %}
+    {% else %}
+    <strong>No films currently in genre.</strong>
+    {% endif %}
+    {% endif %}
+  </div>
 
-    <div class="modal fade" id="filmModal" tabindex="-1" role="dialog" aria-labelledby="filmModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          
-          <div class="modal-header">
 
-            <h5 class="modal-title" id="filmModalLabel">Film Title</h5>
-            
-            
+
+  <div class="modal fade" id="filmModal" tabindex="-1" role="dialog" aria-labelledby="filmModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+
+          <h5 class="modal-title" id="filmModalLabel">Film Title</h5>
+
+
+        </div>
+
+        <div class="modal-body">
+          Views : <p class="views"></p>
+          Director : <p class="director"> </p>
+          Cast : <p class="cast"> </p>
+          Synopsis : <p class="synopsis"> </p>
+
+          <div class="container">
+            <h5> Reviews : </h5>
+            <p class="reviews"> reviews </p>
+
+            <strong> this is just random text to show the functionality of the scrolling bit </strong>
+            <br>
+            Pero pusieron la canción, eh, eh, eh
+            Que cantamos bien borrachos
+            Que bailamos bien borrachos
+            Nos besamos bien borrachos los dos
+            Pensaba que te había olvidao, eh
+            Pero pusieron la canción, eh, eh, eh
+            Que cantamos bien borrachos
+            Que bailamos bien borrachos
+            Nos besamos bien borrachos los dos
+            Pensaba que te había olvidao
+            Justo cuando creía
+            Que por comerme a dos o diez, te olvidaría (yeh)
+            Cogí un respiro y me salí de la vía
+            Y como un pendejo, no sabía lo que hacía
+            Nunca lo superé (no), nunca te superé (no)
+            Hasta me aprendí to'a las baladas en inglés (yeh)
+            Respiré y conté hasta tres
+            Eres la fantasía oscura de Kanye West, bebé, ey
+            Hace tiempo lo barato me salió caro (yih)
+            Yo sólo twitteo, balas locas disparo (yih)
+            ¿Cómo olvidar la bellaquera en el carro?
+            ¿A que guió solo?
+
+
+
+            </p>
           </div>
-
-          <div class="modal-body">
-            Views : <p class="views"></p> 
-            Director : <p class="director"> </p>
-            Cast : <p class="cast"> </p>
-            Synopsis : <p class="synopsis"> </p>
-            
-            
-            
-            </div>
         </div>
 
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
-              Close
-            </button>
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+            Close
+          </button>
         </div>
       </div>
-        
+    </div>
 
 
-</div>
-{% endblock %}
+
+  </div>
+  {% endblock %}

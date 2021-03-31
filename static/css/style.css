@@ -1,6 +1,7 @@
 h1 {
     text-align: center;
     text-shadow: 2px 2px 5px black;
+    
 }
 
 /* navigation bar */
@@ -43,5 +44,19 @@ nav li a:hover{
     border-color: black;
     border-style: solid;
 
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.container {
+    width: 300px;
+    height: 400px;
+    background: #f1f1f1;
+    padding : 10px;
+    overflow: hidden;
+    overflow-y: scroll;
 }
 
