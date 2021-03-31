@@ -26,6 +26,8 @@ $( document ).ready(function() {
                 modal.find('.director').text(director);
                 modal.find('.cast').text(cast);
                 modal.find('.synopsis').text(synopsis);
+
+                modal.find('.reviews').text(reviews);
                 
                 $('#filmModal').modal('toggle');
           },
@@ -62,3 +64,5 @@ $( document ).ready(function() {
         })
     })
 });
+
+
