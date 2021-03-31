@@ -11,9 +11,10 @@
 
 <div class="d-flex justify-content-center">
     {% if genre %}
-        
+        {% if films %}
         <div class="d-flex flex-column">
             {% for film in films %}
+<<<<<<< HEAD
               {% if film %}
               <div class="p-2"> {{ film.title }} </a>
               <br> <img class="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
@@ -27,18 +28,43 @@
     </div>  
 
  
+=======
+              <div class="p-2"> {{ film.title }}</a>
+
+              <img class="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
+            </div>
+            {% endfor %}
+        {% else %}
+            <strong>No films currently in genre.</strong>
+        {% endif %}
+    {% else %}
+        <strong>Invalid Genre</strong>
+    {% endif %}
+
+
+    </div>
+
+
+
+
+>>>>>>> 8b69915cd6948057eb1239fa12252fbe25f2bd77
         <div class="modal fade" id="filmModal" tabindex="-1" role="dialog" aria-labelledby="filmModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               
               <div class="modal-header">
-                
+
                 <h5 class="modal-title" id="filmModalLabel">Film Title</h5>
+<<<<<<< HEAD
                 
                 
+=======
+
+>>>>>>> 8b69915cd6948057eb1239fa12252fbe25f2bd77
               </div>
-        
+
               <div class="modal-body">
+<<<<<<< HEAD
                 Views : <p class="views"></p> 
                 Director : <p class="director"> </p>
                 Cast : <p class="cast"> </p>
@@ -46,19 +72,23 @@
                 
                 
                 
+=======
+
+
+>>>>>>> 8b69915cd6948057eb1239fa12252fbe25f2bd77
                 </div>
             </div>
-            
-        
+
+
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
                   Close
                 </button>
               </div>
             </div>
-          </div>   
+          </div>
 
-        
+
 </div>
 
 

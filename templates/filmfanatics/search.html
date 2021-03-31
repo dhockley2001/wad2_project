@@ -1,0 +1,19 @@
+{% extends 'filmfanatics/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Search for: {{ search_query }}
+{% endblock %}
+
+{% block body_block %}
+
+    {% if searched_films %}
+        {% for film in searched_films %}
+
+        {% endfor %}
+
+    {% else %}
+        <strong>No films match this search.</strong>
+    {% endif %}
+
+{% endblock %}

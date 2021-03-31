@@ -1,6 +1,7 @@
 from filmfanatics.forms import ReviewForm, UserForm, AccountForm
 from filmfanatics.models import Genre, Film, Account, Review
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
@@ -43,7 +44,7 @@ def show_genre(request, genre_name_slug):
 
     except Genre.DoesNotExist:
 
-        context_dict['category'] = None
+        context_dict['genre'] = None
         context_dict['films'] = None
 
     return render(request, 'filmfanatics/genre.html', context=context_dict)
@@ -154,6 +155,15 @@ def trending(request):
 
     return render(request, 'filmfanatics/trending.html', context={'trending_films': trending_films})
 
+def search(request):
+
+    query = request.GET.get('search')
+
+    if query:
+        films = Film.objects.filter(Q(title__icontains=query))
+
+    return render(request, 'filmfanatics/search.html', {'search_query': query, 'searched_films':films})
+
 
 def get_random_film(request):
     if request.is_ajax and request.method == "GET":
@@ -165,6 +175,7 @@ def get_random_film(request):
         film.views += 1
         film.save()
 
+
         response_data = {}
 
         response_data['title'] = film.title
@@ -175,6 +186,12 @@ def get_random_film(request):
         response_data['views'] = film.views
         response_data['review_number'] = film.review_number
         response_data['average_rating'] = film.average_rating
+
+        getReviews = Review.objects.filter(film=film)
+
+        reviews = [ review.as_dict() for review in getReviews ]
+
+        response_data['reviews'] = reviews
 
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     else:
@@ -206,6 +223,12 @@ def get_film(request):
         response_data['views'] = film.views
         response_data['review_number'] = film.review_number
         response_data['average_rating'] = film.average_rating
+
+        getReviews = Review.objects.filter(film=film)
+
+        reviews = [ review.as_dict() for review in getReviews ]
+
+        response_data['reviews'] = reviews
 
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     else:

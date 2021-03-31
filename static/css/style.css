@@ -18,7 +18,7 @@ li {
 }
 
 nav li {
-    display: inline-block;   
+    display: inline-block;
 }
 
 nav li a {
@@ -44,3 +44,4 @@ nav li a:hover{
     border-style: solid;
 
 }
+
