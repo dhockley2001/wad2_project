@@ -55,7 +55,7 @@ class Review(models.Model):
 
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
-    posted_at = models.DateTimeField()
+    posted_at = models.DateTimeField(auto_now_add=True)
     comment = models.TextField()
     rating = models.PositiveIntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
 
@@ -67,7 +67,7 @@ class Review(models.Model):
             for review in Review.objects.filter(film=self.film):
                 count += review.rating
             self.film.average_rating = count // self.film.review_number
-        super(Film, self).save(*args, **kwargs)
+        super(Review, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.account + " (" + self.posted_at + ")"

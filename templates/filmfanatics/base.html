@@ -45,11 +45,6 @@
         {% endif %}
 
       </ul>
-      {% if user.is_authenticated %}
-      <div style="text-align: end; padding: 10px;">
-        <a class="btn btn-outline-info" href="{% url 'filmfanatics:logout' %}" role="button">Logout</a>
-      </div>
-      {% endif %}
 
       <form class="d-flex" action="{% url 'filmfanatics:search' %}">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
