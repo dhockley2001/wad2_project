@@ -35,9 +35,14 @@ class Film(models.Model):
     reset_at = models.DateTimeField(default=datetime.now(timezone.utc))
     average_rating = models.PositiveIntegerField(default=3, validators=[MinValueValidator(0), MaxValueValidator(5)])
     review_number = models.PositiveIntegerField(default=0)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(str(self))
+        super(Film, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.title
+        return self.title + " (" + str(self.release) + ")"
 
 class Account(models.Model):
 
@@ -70,7 +75,7 @@ class Review(models.Model):
         super(Review, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.account + " (" + self.posted_at + ")"
+        return str(self.account) + " (" + str(self.posted_at) + ")"
 
     def as_dict(self):
         return {
