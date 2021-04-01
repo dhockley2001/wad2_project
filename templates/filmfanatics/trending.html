@@ -6,8 +6,88 @@
 {% endblock %}
 
 {% block body_block %}
-{% for film in trending_films %}
 
-{% endfor %}
+<div class="container"> 
+    <div class="row">
+        {% widthratio trending_films|length 2 1 as visible_fields_centre %}
+        <div class="col">
+            <div class="rows_form">
+                <div class="d-flex flex-column">
+                    {% with ":"|add:visible_fields_centre as first_slice %}
+                        {% for film in trending_films|slice:first_slice %}
+                            <div class="p-2">
+                                <div style="text-align: center;">
+                                    <br>
+                                    <h4> {{ film.title }} </h4>
+                                    <img class="filmLink" src="{{ film.picture }}" width="256px" height="320px" class="d-block w-100" style="cursor: pointer;text-align: center" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
+                                </div> 
+                            </div>
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="rows_form">
+                <div class="d-flex flex-column ">
+                    {% with visible_fields_centre|add:":" as second_slice %}
+                    {% for film in trending_films|slice:second_slice %}
+                    <div class="p-2">
+                        <div style="text-align: center;">
+                            <br>
+                            <h4> {{ film.title }} </h4>
+                            <img class="filmLink" src="{{ film.picture }}" width="256px" height="320px" class="d-block w-100" style="cursor: pointer;text-align: center" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
+                        </div> 
+                    </div>
+                    {% endfor %}
+                {% endwith %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="filmModal" tabindex="-1" role="dialog" aria-labelledby="filmModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="filmModalLabel">Film Title</h5>
+
+          {% if user.is_authenticated %}
+          <a class="btn btn-outline-info" href="{% url 'filmfanatics:write_review' %}" role="button">Write a review</a>
+          {% endif %}
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          Views : <p class="views">  </p>  
+          Director : <p class="director"> </p>
+          Cast : <p class="cast"> </p>
+          Synopsis : <p class="synopsis"> </p>
+        
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <br>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
+
 
 {% endblock %}

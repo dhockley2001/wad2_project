@@ -9,6 +9,9 @@ urlpatterns = [
     path('genre/<slug:genre_name_slug>/', views.show_genre, name='genre'),
     path('sign_up/', views.sign_up, name='sign_up'),
     path('login/', views.user_login, name='login'),
+    
+    path('write_review/',views.write_review, name='write_review'),
+
     path('my_account/', views.account, name='account'),
     path('logout/', views.user_logout, name='logout'),
     path('trending/', views.trending, name='trending'),

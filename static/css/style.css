@@ -38,7 +38,7 @@ nav li a:hover{
 /* curved box */
 .curved-box{
     width: 200px;
-    height: 50px;
+    height: 200px;
     margin: 10px;
     border-radius: 5px;
     border-color: black;
@@ -63,4 +63,6 @@ body {
 .checked {
   color: orange;
 }
+
+
 
