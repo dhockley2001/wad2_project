@@ -50,7 +50,7 @@ class Account(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    picture = models.ImageField(upload_to='profile_images/', blank=True)
     saved_films = models.ManyToManyField(Film)
 
     def __str__(self):
@@ -78,9 +78,14 @@ class Review(models.Model):
         return str(self.account) + " (" + str(self.posted_at) + ")"
 
     def as_dict(self):
+        #fixing some wierd image behaviour on upload
+        if str(self.account.picture).startswith('/media/'):
+            profile_pic = str(self.account.picture)
+        else:
+            profile_pic = '/media/' + str(self.account.picture)
         return {
             "username": self.account.user.username,
-            "profile_pic": str(self.account.picture),
+            "profile_pic": profile_pic,
             "posted_at": self.posted_at,
             "comment": self.comment,
             "rating": self.rating,

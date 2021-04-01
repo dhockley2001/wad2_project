@@ -20,8 +20,8 @@ class AccountForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
 
     comment = forms.CharField(widget=forms.Textarea, help_text = "Please enter your review of the film.")
-    rating = forms.IntegerField(widget=Stars(), help_text = "Choose your rating out of 5 stars.")
+    rating = forms.IntegerField(widget=Stars, help_text = "Choose your rating out of 5 stars.")
 
     class Meta:
         model = Review
-        exclude = ('user', 'film',)
+        exclude = ('account', 'film', 'posted_at')

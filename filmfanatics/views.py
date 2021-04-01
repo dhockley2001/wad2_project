@@ -94,6 +94,7 @@ def account(request):
     context_dict = {}
 
     account = Account.objects.get(user=request.user)
+    print(account.picture)
 
     saved_films = account.saved_films.all()
     created_reviews = Review.objects.filter(account=account)
@@ -104,7 +105,16 @@ def account(request):
     return render(request, 'filmfanatics/account.html', context=context_dict)
 
 @login_required
-def write_review(request):
+def write_review(request, film_name_slug=None):
+
+    try:
+        film = Film.objects.get(slug=film_name_slug)
+    except Film.DoesNotExist:
+        film = None
+
+    if film is None:
+        redirect(reverse('filmfanatics:home'))
+
 
     form = ReviewForm()
 
@@ -112,15 +122,22 @@ def write_review(request):
         form = ReviewForm(request.POST)
 
         if form.is_valid():
+            if film:
+                review = form.save(commit=False)
+                review.posted_at = datetime.now()
+                review.film = film
+                user = request.user
+                account = Account.objects.get(user=user)
+                review.account = account
+                review.save()
+                genre = film.genre
 
-            form.save(commit=True)
-
-            return redirect(reverse('filmfanatics:genre'))
+            return redirect(reverse('filmfanatics:genre', kwargs={'genre_name_slug': genre.slug}))
 
         else:
             print(form.errors)
 
-    return render(request, 'filmfanatics/write_review.html', context={'form': form})
+    return render(request, 'filmfanatics/write_review.html', context={'form': form, 'film': film})
 
 def user_login(request):
 
@@ -186,10 +203,12 @@ def get_random_film(request):
         response_data['views'] = film.views
         response_data['review_number'] = film.review_number
         response_data['average_rating'] = film.average_rating
+        response_data['slug'] = film.slug
 
         getReviews = Review.objects.filter(film=film).order_by('posted_at')
 
         reviews = [ review.as_dict() for review in getReviews ]
+
 
 
         response_data['reviews'] = reviews
@@ -224,10 +243,13 @@ def get_film(request):
         response_data['views'] = film.views
         response_data['review_number'] = film.review_number
         response_data['average_rating'] = film.average_rating
+        response_data['slug'] = film.slug
 
         getReviews = Review.objects.filter(film=film).order_by('posted_at')
 
         reviews = [ review.as_dict() for review in getReviews ]
+        for review in reviews:
+            print("get_film: " + review['profile_pic'])
 
         response_data['reviews'] = reviews
 

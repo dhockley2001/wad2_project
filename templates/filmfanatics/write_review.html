@@ -4,22 +4,23 @@
     Write a Review
 {% endblock %}
 
-{%block body_block %}
-    {{ Film.title }}
+{% block body_block %}
 
-    <h1> Write a review </h1>
-    
-    <form action="post">
+
+<h1> Write a review on {{ film.title }}.</h1>
+<div style="text-align: center;">
+    <form id="write_review_form" method="post" action="{% url 'filmfanatics:write_review2' film.slug %}">
         {% csrf_token %}
-        {{ form }} 
-        <button type="submit">
-            Submit
-        </button>
+        {% for field in form.visible_fields %}
+            {{ field.errors }}
+            <br/>
+            {{ field.help_text }}
+            <br/>
+            {{ field }}
+            <br/>
+        {% endfor %}
+        <input type="submit" name="submit" value="Submit" />
     </form>
-
-
-    
-   
-        
+</div>
 
 {% endblock %}

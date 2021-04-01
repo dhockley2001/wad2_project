@@ -50,10 +50,10 @@
           <h5 class="modal-title" id="filmModalLabel">Film Title</h5>
 
           {% if user.is_authenticated %}
-          <a class="btn btn-outline-info" href="{% url 'filmfanatics:write_review' %}" role="button">Write a review</a>
+          <a id = "reviewButton" class="btn btn-outline-info" role="button" data-url="{% url 'filmfanatics:write_review1' %}">Write a review</a>
           {% endif %}
 
-          
+
 
 
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -63,11 +63,11 @@
         </div>
 
         <div class="modal-body">
-          Views : <p class="views">  </p>  
+          Views : <p class="views">  </p>
           Director : <p class="director"> </p>
           Cast : <p class="cast"> </p>
           Synopsis : <p class="synopsis"> </p>
-          
+
 
           <div class="panel panel-default">
             <div class="panel-body">

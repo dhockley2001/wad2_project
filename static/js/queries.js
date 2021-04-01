@@ -19,6 +19,7 @@ $( document ).ready(function() {
                 var review_number = json["review_number"]
                 var average_rating = json["average_rating"]
                 var reviews = json["reviews"]
+                var slug = json["slug"]
 
                 var modal = $("#filmModal")
                 modal.find('.modal-title').text(title);
@@ -26,6 +27,9 @@ $( document ).ready(function() {
                 modal.find('.director').text(director);
                 modal.find('.cast').text(cast);
                 modal.find('.synopsis').text(synopsis);
+                var review_button = $('#reviewButton')
+                var review_url = review_button.attr("data-url");
+                review_button.attr('href', review_url + slug + "/");
 
                 $('.panel-body').empty();
 
@@ -34,6 +38,7 @@ $( document ).ready(function() {
                     firstDiv.appendTo( ".panel-body");
                     var secondDiv = $('<div></div>').addClass("media-left");
                     secondDiv.appendTo(firstDiv);
+                    console.log(review.profile_pic);
                     var img = $('<img>').addClass("media-object").css("width","60px").attr('src', review.profile_pic);
                     img.appendTo(secondDiv);
                     var thirdDiv = $('<div></div>').addClass("media-body");
@@ -77,6 +82,7 @@ $( document ).ready(function() {
                     var review_number = json["review_number"]
                     var average_rating = json["average_rating"]
                     var reviews = json["reviews"]
+                    var slug = json['slug']
 
                     var modal = $("#filmModal")
                     modal.find('.modal-title').text(title);
@@ -84,6 +90,9 @@ $( document ).ready(function() {
                     modal.find('.director').text(director);
                     modal.find('.cast').text(cast);
                     modal.find('.synopsis').text(synopsis);
+                    var review_button = $('#reviewButton')
+                    var review_url = review_button.attr("data-url");
+                    review_button.attr('href', review_url + slug + "/");
 
                     $('.panel-body').empty();
 
