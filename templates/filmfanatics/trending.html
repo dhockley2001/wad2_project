@@ -6,6 +6,16 @@
 {% endblock %}
 
 {% block body_block %}
+{% if user.is_authenticated %}
+      <div style="text-align: end; padding: 10px;">
+        <a class="btn btn-outline-info" href="{% url 'filmfanatics:logout' %}" role="button">Logout</a>
+      </div>
+{% endif %}
+
+<div style="text-align: center;">
+    <h2 style="font-size: 50px;">  Trending </h2>
+</div>
+
 
 <div class="container"> 
     <div class="row">

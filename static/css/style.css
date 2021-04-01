@@ -2,6 +2,7 @@ h1 {
     text-align: center;
     text-shadow: 2px 2px 5px black;
 
+
 }
 
 /* navigation bar */
@@ -63,6 +64,16 @@ body {
 .checked {
   color: orange;
 }
+
+.footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+
 
 
 

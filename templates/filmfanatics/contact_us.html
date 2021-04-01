@@ -7,7 +7,15 @@
 
 {% block body_block %}
 
-<h1>Contact Us</h1>
+{% if user.is_authenticated %}
+      <div style="text-align: end; padding: 10px;">
+        <a class="btn btn-outline-info" href="{% url 'filmfanatics:logout' %}" role="button">Logout</a>
+      </div>
+{% endif %}
+
+<div style="text-align: center;">
+    <h2 style="font-size: 50px;"> Contact Us </h2>
+</div>
 
 <div style="background-color:#cccccc; text-align:middle; vertical-align: middle; padding:20px 47px;">
 
@@ -20,5 +28,13 @@
     </ul>
 
 </div>
+
+<footer class="footer mt-auto py-3 bg-info">
+    <div class="container"> 
+      <span class="text-muted">
+        
+      </span>
+    </div> 
+  </footer>
 
 {% endblock %}

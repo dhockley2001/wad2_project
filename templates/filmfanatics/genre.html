@@ -6,9 +6,15 @@
 {% endblock %}
 
 {% block body_block %}
-<div style="text-align: end; padding: 25px;">
-  <h1 style="text-align: center;">{{ genre.name }}</h1> 
-  <a class="btn btn-outline-info" href="{% url 'filmfanatics:logout' %}" role="button">Logout</a>
+{% if user.is_authenticated %}
+      <div style="text-align: end; padding: 10px;">
+        <a class="btn btn-outline-info" href="{% url 'filmfanatics:logout' %}" role="button">Logout</a>
+      </div>
+{% endif %}
+
+<div style="text-align: center;">
+    <h2 style="font-size: 50px;"> {{ genre }} </h2>
+    <br>
 </div>
 
 

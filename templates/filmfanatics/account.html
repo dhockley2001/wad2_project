@@ -11,9 +11,15 @@
       </div>
 {% endif %}
 
-<div class="row justify-content-center">
+<div style="text-align: center;">
+    <h2 style="font-size: 50px;"> My Account </h2>
+</div>
+
+
+
+<div class="row justify-content-center" style="background-color:whitesmoke">
   <div class="col-4">
-    <h2> {{ user.username }} <br> </h2>
+    <h2 style="font-size: 50px;"> <em> {{ user.username }} </em> <br> </h2>
   </div>
   <div class="col-4">
     
@@ -25,7 +31,7 @@
     {% if user.account.picture %}
       <img src="{{ user.account.picture.url }}" width="240">
     {% endif %}
-    <p> My saved films : {{user.account.save_films }} </p>
+    <p> My saved films : {{ user.account.save_films }} </p>
     
   </div>
   <div class="col-4">
@@ -33,5 +39,8 @@
     <p> <strong> Bio : </strong>  <br> {{ user.account.bio }}</p>
   </div>
 
+
+
+  
 
 {% endblock %}
