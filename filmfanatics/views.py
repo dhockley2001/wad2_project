@@ -187,7 +187,7 @@ def get_random_film(request):
         response_data['review_number'] = film.review_number
         response_data['average_rating'] = film.average_rating
 
-        getReviews = Review.objects.filter(film=film)
+        getReviews = Review.objects.filter(film=film).order_by('posted_at')
 
         reviews = [ review.as_dict() for review in getReviews ]
 
@@ -225,7 +225,7 @@ def get_film(request):
         response_data['review_number'] = film.review_number
         response_data['average_rating'] = film.average_rating
 
-        getReviews = Review.objects.filter(film=film)
+        getReviews = Review.objects.filter(film=film).order_by('posted_at')
 
         reviews = [ review.as_dict() for review in getReviews ]
 
