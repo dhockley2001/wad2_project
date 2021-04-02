@@ -1,2 +1,11 @@
-pip install django_starfield
-
+-f /usr/share/pip-wheels
+amqp==1.4.9
+anyjson==0.3.3
+billiard==3.3.0.23
+Django==2.2.17
+django-registration-redux==2.2
+django-starfield==1.0.post2
+kombu==3.0.37
+Pillow==8.1.1
+pytz==2021.1
+sqlparse==0.4.1
