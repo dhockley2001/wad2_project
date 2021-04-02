@@ -17,7 +17,7 @@
 </div>
 
 
-<div class="container"> 
+<div class="container">
     <div class="row">
         {% widthratio trending_films|length 2 1 as visible_fields_centre %}
         <div class="col">
@@ -30,7 +30,7 @@
                                     <br>
                                     <h4> {{ film.title }} </h4>
                                     <img class="filmLink" src="{{ film.picture }}" width="256px" height="320px" class="d-block w-100" style="cursor: pointer;text-align: center" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
-                                </div> 
+                                </div>
                             </div>
                         {% endfor %}
                     {% endwith %}
@@ -48,7 +48,7 @@
                             <br>
                             <h4> {{ film.title }} </h4>
                             <img class="filmLink" src="{{ film.picture }}" width="256px" height="320px" class="d-block w-100" style="cursor: pointer;text-align: center" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
-                        </div> 
+                        </div>
                     </div>
                     {% endfor %}
                 {% endwith %}
@@ -59,34 +59,49 @@
     </div>
 </div>
 
-<div class="modal fade" id="filmModal" tabindex="-1" role="dialog" aria-labelledby="filmModalLabel"
+  <div class="modal fade" id="filmModal" tabindex="-1" role="dialog" aria-labelledby="filmModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
+
         <div class="modal-header">
+
           <h5 class="modal-title" id="filmModalLabel">Film Title</h5>
 
           {% if user.is_authenticated %}
-          <a class="btn btn-outline-info" href="{% url 'filmfanatics:write_review' %}" role="button">Write a review</a>
+          <a id = "reviewButton" class="btn btn-outline-info" role="button" data-url="{% url 'filmfanatics:write_review1' %}">Write a review</a>
+          <div class="saveFilm" data-urlcheck="{% url 'filmfanatics:check_film' %}" data-urlsave = "{% url 'filmfanatics:save_film' %}"></div>
           {% endif %}
 
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-          </button>
+        </button>
+
         </div>
 
         <div class="modal-body">
-          Views : <p class="views">  </p>  
+        <img class="picture"  width="245px" height="245px" class="d-block w-100" style="text-align: center; align: right">
+        <br/>
+          Views : <p class="views">  </p>
           Director : <p class="director"> </p>
           Cast : <p class="cast"> </p>
           Synopsis : <p class="synopsis"> </p>
-        
+          Average Rating : <p><div class="avgRating"></div></p>
+
+
+
           <div class="panel panel-default">
             <div class="panel-body">
                 <br>
             </div>
           </div>
+
+
         </div>
+
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">

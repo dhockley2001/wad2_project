@@ -51,7 +51,7 @@ class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
     picture = models.ImageField(upload_to='profile_images/', blank=True)
-    saved_films = models.ManyToManyField(Film)
+    saved_films = models.ManyToManyField(Film, blank=True, null=True)
 
     def __str__(self):
         return self.user.username

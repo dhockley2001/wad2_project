@@ -27,9 +27,20 @@ $( document ).ready(function() {
                 modal.find('.director').text(director);
                 modal.find('.cast').text(cast);
                 modal.find('.synopsis').text(synopsis);
-                var review_button = $('#reviewButton')
+                modal.find('.picture').attr('src', picture);
+                console.log(modal.find('.picture').attr('src'));
+                var review_button = $('#reviewButton');
                 var review_url = review_button.attr("data-url");
                 review_button.attr('href', review_url + slug + "/");
+
+                var stars = modal.find('.avgRating');
+                stars.empty();
+                var i;
+                for (i = 0; i < average_rating; i++){
+                    var star = $('<span></span>').addClass("fa fa-star checked");
+                    star.appendTo(stars);
+                }
+
 
                 $('.panel-body').empty();
 
@@ -84,15 +95,25 @@ $( document ).ready(function() {
                     var reviews = json["reviews"]
                     var slug = json['slug']
 
-                    var modal = $("#filmModal")
+                    var modal = $("#filmModal");
                     modal.find('.modal-title').text(title);
                     modal.find('.views').text(views);
                     modal.find('.director').text(director);
                     modal.find('.cast').text(cast);
                     modal.find('.synopsis').text(synopsis);
-                    var review_button = $('#reviewButton')
+                    modal.find('.picture').attr('src', picture);
+                    console.log(modal.find('.picture').attr('src'));
+                    var review_button = $('#reviewButton');
                     var review_url = review_button.attr("data-url");
                     review_button.attr('href', review_url + slug + "/");
+
+                    var stars = modal.find('.avgRating');
+                    stars.empty();
+                    var i;
+                    for (i = 0; i < average_rating; i++){
+                        var star = $('<span></span>').addClass("fa fa-star checked");
+                        star.appendTo(stars);
+                    }
 
                     $('.panel-body').empty();
 
@@ -127,4 +148,40 @@ $( document ).ready(function() {
             }
         })
     })
+
+    $( document ).on('shown.bs.modal', function (e) {
+        var div = $(".saveFilm");
+        var checkurl = div.attr("data-urlcheck");
+        var saveurl = div.attr("data-urlsave");
+        var name = $("#filmModal").find('.modal-title').text();
+        $.ajax({
+            type : 'POST',
+            url : checkurl,
+            data : {name:name},
+            success: function (json) {
+
+                div.empty();
+
+                var saved = json['saved']
+                var slug = json['slug']
+                console.log(saved)
+
+                if (saved) {
+                var button = $('<a id = "saveButton" class="btn btn-outline-info" role="button">Remove Film From Saved</a>');
+                    button.attr('href', saveurl + slug + "/");
+                    button.appendTo(div);
+                } else {
+                    var button = $('<a id = "saveButton" class="btn btn-outline-info" role="button">Save This Film</a>');
+                    button.attr('href', saveurl + slug + "/");
+                    button.appendTo(div);
+                }
+
+            },
+            error: function(response){
+                console.log(response);
+            }
+        })
+    })
+
+
 });

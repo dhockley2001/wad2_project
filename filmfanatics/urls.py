@@ -17,5 +17,8 @@ urlpatterns = [
     path('search/', views.search, name="search"),
     path('get/ajax/get_random_film/', views.get_random_film, name = 'get_random_film'),
     path('post/ajax/get_film/', views.get_film, name = 'get_film'),
+    path('post/ajax/check_film/', views.check_film, name = 'check_film'),
+    path('save_film/', views.save_film, name = 'save_film'),
+    path('save_film/<slug:film_name_slug>/', views.save_film, name = 'save_film2'),
 ]
 

@@ -11,45 +11,87 @@
 <div class="container" style="text-align: center;">
     <div class="row">
       <div class="col-sm">
-        
+
       </div>
       <div class="col-sm">
         {% if searched_films %}
             {% for film in searched_films %}
                 <br>
-                {% if film %} 
+                {% if film %}
                 <h3 style="text-align: center;"> {{ film.title }}</h3>
-                
-                {% if user.is_authenticated %}
-                <a class="btn btn-outline-info" href="#" role="button">Write a review</a>
-                <br>
-                {% endif %}
+
                 <br> <img class="filmLink" src="{{ film.picture }}" class="d-block w-100" style="cursor: pointer" alt="{{ film.title }}" data-url="{% url 'filmfanatics:get_film' %}">
-                <p> Rating : {{ film.average_rating }} &nbsp; Views : {{ film.views }}</p>
-                <p> Release : {{ film.release }}</p>
-                <p> Cast : {{ film.cast }}</p>
-                 Synopsis : {{ film.synopsis }}
-                
+
                 {% endif %}
             {% endfor %}
-           
+
             {% else %}
                 <strong>No films match this search.</strong>
-            
-            {% endif %}
+
+        {% endif %}
       </div>
       <div class="col-sm">
-        
+
       </div>
     </div>
   </div>
 
 
+  <div class="modal fade" id="filmModal" tabindex="-1" role="dialog" aria-labelledby="filmModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
 
-    
-        
+        <div class="modal-header">
+
+          <h5 class="modal-title" id="filmModalLabel">Film Title</h5>
+
+          {% if user.is_authenticated %}
+          <a id = "reviewButton" class="btn btn-outline-info" role="button" data-url="{% url 'filmfanatics:write_review1' %}">Write a review</a>
+          <div class="saveFilm" data-urlcheck="{% url 'filmfanatics:check_film' %}" data-urlsave = "{% url 'filmfanatics:save_film' %}"></div>
+          {% endif %}
 
 
-    
+
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        </div>
+
+        <div class="modal-body">
+        <img class="picture"  width="245px" height="245px" class="d-block w-100" style="text-align: center; align: right">
+        <br/>
+          Views : <p class="views">  </p>
+          Director : <p class="director"> </p>
+          Cast : <p class="cast"> </p>
+          Synopsis : <p class="synopsis"> </p>
+          Average Rating : <p><div class="avgRating"></div></p>
+
+
+
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <br>
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
 
 {% endblock %}

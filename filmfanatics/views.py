@@ -94,7 +94,6 @@ def account(request):
     context_dict = {}
 
     account = Account.objects.get(user=request.user)
-    print(account.picture)
 
     saved_films = account.saved_films.all()
     created_reviews = Review.objects.filter(account=account)
@@ -209,8 +208,6 @@ def get_random_film(request):
 
         reviews = [ review.as_dict() for review in getReviews ]
 
-
-
         response_data['reviews'] = reviews
 
         return HttpResponse(json.dumps(response_data, default=json_serial), content_type="application/json")
@@ -248,14 +245,62 @@ def get_film(request):
         getReviews = Review.objects.filter(film=film).order_by('posted_at')
 
         reviews = [ review.as_dict() for review in getReviews ]
-        for review in reviews:
-            print("get_film: " + review['profile_pic'])
 
         response_data['reviews'] = reviews
 
         return HttpResponse(json.dumps(response_data, default=json_serial), content_type="application/json")
     else:
         return HttpResponse(json.dumps({"error": "Could not get film"}),content_type="application/json")
+
+@login_required
+@csrf_exempt
+def check_film(request):
+    print("arrived check")
+    if request.is_ajax and request.method == "POST":
+
+        account = Account.objects.get(user=request.user)
+        filmName = request.POST.get('name')
+        film = Film.objects.get(title=filmName)
+
+        saved = account.saved_films.all()
+        print(saved.count())
+
+        if film in saved:
+            print("film found")
+            return HttpResponse(json.dumps({'saved': True, 'slug': film.slug}, default=json_serial), content_type="application/json")
+        else:
+            return HttpResponse(json.dumps({'saved': False, 'slug': film.slug}, default=json_serial), content_type="application/json")
+    else:
+        return HttpResponse(json.dumps({"error": "Could not check film"}),content_type="application/json")
+
+@login_required
+def save_film(request, film_name_slug):
+    print("arrived")
+
+    try:
+        film = Film.objects.get(slug=film_name_slug)
+    except Film.DoesNotExist:
+        film = None
+
+    if film is None:
+        redirect(reverse('filmfanatics:home'))
+
+    if request.method == 'GET':
+
+        account = Account.objects.get(user=request.user)
+
+        if film in account.saved_films.all():
+            print("Film is in saved_films")
+            account.saved_films.remove(film)
+        else:
+            print("adding film")
+            account.saved_films.add(film)
+        account.save()
+
+    genre = film.genre
+    return redirect(reverse('filmfanatics:genre', kwargs={'genre_name_slug': genre.slug}))
+
+
 
 def check_reset(film):
 

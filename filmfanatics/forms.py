@@ -16,6 +16,7 @@ class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
         fields = ('bio', 'picture',)
+        exclude = ('saved_films',)
 
 class ReviewForm(forms.ModelForm):
 
