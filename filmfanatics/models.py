@@ -12,6 +12,7 @@ class Genre(models.Model):
     graphic = models.ImageField(upload_to='genre_graphics')
     slug = models.SlugField(unique=True)
 
+    # get slug field when object is saved
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Genre, self).save(*args, **kwargs)
@@ -32,11 +33,15 @@ class Film(models.Model):
     synopsis = models.TextField()
     release = models.DateField(null=True)
     views = models.IntegerField(default=0)
+
+    # field to track last view reset time
     reset_at = models.DateTimeField(default=datetime.now(timezone.utc))
+
     average_rating = models.PositiveIntegerField(default=3, validators=[MinValueValidator(0), MaxValueValidator(5)])
     review_number = models.PositiveIntegerField(default=0)
     slug = models.SlugField(unique=True)
 
+    # get slug field when object saved
     def save(self, *args, **kwargs):
         self.slug = slugify(str(self))
         super(Film, self).save(*args, **kwargs)
@@ -77,6 +82,7 @@ class Review(models.Model):
     def __str__(self):
         return str(self.account) + " (" + str(self.posted_at) + ")"
 
+        # helper function to prepare a review for json serialization
     def as_dict(self):
         #fixing some wierd image behaviour on upload
         if str(self.account.picture).startswith('/media/'):

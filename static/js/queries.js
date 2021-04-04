@@ -1,7 +1,10 @@
-
+// check document has loaded
 $( document ).ready(function() {
     console.log( "ready!" );
+
+    // when a film image has been clicked, display its information on a modal
       $( document ).on('click', '.filmLink', function (e) {
+          // get url for function from element and the film name
             var url = $(this).attr("data-url");
             var name = $(this).attr("alt")
       $.ajax({
@@ -9,6 +12,8 @@ $( document ).ready(function() {
           url: url,
           data: {film: name},
           success: function (json) {
+
+              // parse json response
                 var title = json["title"]
                 var director = json["director"]
                 var cast = json["cast"]
@@ -21,6 +26,7 @@ $( document ).ready(function() {
                 var reviews = json["reviews"]
                 var slug = json["slug"]
 
+                // get the modal and update its information
                 var modal = $("#filmModal")
                 modal.find('.modal-title').text(title);
                 modal.find('.views').text(views);
@@ -28,11 +34,13 @@ $( document ).ready(function() {
                 modal.find('.cast').text(cast);
                 modal.find('.synopsis').text(synopsis);
                 modal.find('.picture').attr('src', picture);
-                console.log(modal.find('.picture').attr('src'));
+
+                // change the url that the review button points to, passing the correct film as an arguement
                 var review_button = $('#reviewButton');
                 var review_url = review_button.attr("data-url");
                 review_button.attr('href', review_url + slug + "/");
 
+                // insert number of stars based on the rating
                 var stars = modal.find('.avgRating');
                 stars.empty();
                 var i;
@@ -42,8 +50,10 @@ $( document ).ready(function() {
                 }
 
 
+                // reset reviews panel from last modal
                 $('.panel-body').empty();
 
+                // insert review box for each review, with the correct information
                 $.each(reviews, function(index, review) {
                     var firstDiv = $('<div></div>').addClass("media");
                     firstDiv.appendTo( ".panel-body");
@@ -68,6 +78,8 @@ $( document ).ready(function() {
                     firstDiv.append('<br>')
 
                 });
+
+                // open the modal once all of the correct information has been inserted onto the modal
                 $('#filmModal').modal('toggle');
           },
         error: function (response) {
@@ -76,13 +88,15 @@ $( document ).ready(function() {
       })
       })
 
+    // when the random button is clicked, find a random film and display its information on a modal
     $('#randButton').on('click',function (e) {
+        // get url for function from element
             var url = $(this).attr("data-url");
         $.ajax({
             type: 'GET',
             url: url,
             success: function (json) {
-                // open and change modal
+                // parse json response
                     var title = json["title"]
                     var director = json["director"]
                     var cast = json["cast"]
@@ -95,6 +109,7 @@ $( document ).ready(function() {
                     var reviews = json["reviews"]
                     var slug = json['slug']
 
+                    // get the modal and update its information
                     var modal = $("#filmModal");
                     modal.find('.modal-title').text(title);
                     modal.find('.views').text(views);
@@ -102,11 +117,13 @@ $( document ).ready(function() {
                     modal.find('.cast').text(cast);
                     modal.find('.synopsis').text(synopsis);
                     modal.find('.picture').attr('src', picture);
-                    console.log(modal.find('.picture').attr('src'));
+
+                    // change the url that the review button points to, passing the correct film as an arguement
                     var review_button = $('#reviewButton');
                     var review_url = review_button.attr("data-url");
                     review_button.attr('href', review_url + slug + "/");
 
+                    // insert number of stars based on the rating
                     var stars = modal.find('.avgRating');
                     stars.empty();
                     var i;
@@ -115,8 +132,10 @@ $( document ).ready(function() {
                         star.appendTo(stars);
                     }
 
+                    // reset review panel from previous modal opening
                     $('.panel-body').empty();
 
+                    // insert review box for each review, with the correct information
                     $.each(reviews, function(index, review) {
                         var firstDiv = $('<div></div>').addClass("media");
                         firstDiv.appendTo( ".panel-body");
@@ -149,10 +168,16 @@ $( document ).ready(function() {
         })
     })
 
+    // when a modal is shown, update the save button based on whether the film already has been saved
     $( document ).on('shown.bs.modal', function (e) {
+        // get the area where the button is placed
         var div = $(".saveFilm");
+
+        // get both function urls
         var checkurl = div.attr("data-urlcheck");
         var saveurl = div.attr("data-urlsave");
+
+        // get the film name
         var name = $("#filmModal").find('.modal-title').text();
         $.ajax({
             type : 'POST',
@@ -160,16 +185,19 @@ $( document ).ready(function() {
             data : {name:name},
             success: function (json) {
 
+                // reset the button
                 div.empty();
 
+                // parse json response, including whether the film is already saved or not
                 var saved = json['saved']
                 var slug = json['slug']
-                console.log(saved)
 
+                // if it is saved, display remove button
                 if (saved) {
                 var button = $('<a id = "saveButton" class="btn btn-outline-info" role="button">Remove Film From Saved</a>');
                     button.attr('href', saveurl + slug + "/");
                     button.appendTo(div);
+                // otherwise display save button
                 } else {
                     var button = $('<a id = "saveButton" class="btn btn-outline-info" role="button">Save This Film</a>');
                     button.attr('href', saveurl + slug + "/");

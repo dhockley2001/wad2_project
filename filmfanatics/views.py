@@ -15,6 +15,8 @@ import json
 def home(request):
 
     genre_list = Genre.objects.order_by('name')
+
+    # find the five most recently released films
     recently_released = Film.objects.order_by('-release')[:5]
 
     context_dict = {}
@@ -37,6 +39,8 @@ def show_genre(request, genre_name_slug):
 
     try:
         genre = Genre.objects.get(slug=genre_name_slug)
+
+        # get associated films of the genre
         films = Film.objects.filter(genre=genre)
 
         context_dict['genre'] = genre
@@ -53,11 +57,13 @@ def sign_up(request):
 
     registered = False
 
+    # if submitting the data
     if request.method == 'POST':
 
         user_form = UserForm(request.POST)
         account_form = AccountForm(request.POST)
 
+        # if both forms are valid save the information
         if user_form.is_valid() and account_form.is_valid():
 
             user = user_form.save()
@@ -68,6 +74,7 @@ def sign_up(request):
             account = account_form.save(commit=False)
             account.user = user
 
+            # get the profile pciture
             if 'picture' in request.FILES:
                 account.picture = request.FILES['picture']
 
@@ -76,9 +83,11 @@ def sign_up(request):
             registered = True
 
         else:
+            # form invalid
             print(user_form.errors, account_form.errors)
 
     else:
+        # render the form
         user_form = UserForm()
         account_form = AccountForm()
 
@@ -93,19 +102,22 @@ def account(request):
 
     context_dict = {}
 
+    # get the associated account of the logged in user
     account = Account.objects.get(user=request.user)
 
+    # get the accounts saved films
     saved_films = account.saved_films.all()
-    created_reviews = Review.objects.filter(account=account)
+
 
     context_dict['saved_films'] = saved_films
-    context_dict['created_reviews'] = created_reviews
+
 
     return render(request, 'filmfanatics/account.html', context=context_dict)
 
 @login_required
 def write_review(request, film_name_slug=None):
 
+    # check film is valid
     try:
         film = Film.objects.get(slug=film_name_slug)
     except Film.DoesNotExist:
@@ -117,11 +129,13 @@ def write_review(request, film_name_slug=None):
 
     form = ReviewForm()
 
+    # if submitting the review
     if request.method == 'POST':
         form = ReviewForm(request.POST)
 
         if form.is_valid():
             if film:
+                # save the review information
                 review = form.save(commit=False)
                 review.posted_at = datetime.now()
                 review.film = film
@@ -140,6 +154,7 @@ def write_review(request, film_name_slug=None):
 
 def user_login(request):
 
+    # if submitting the information
     if request.method == 'POST':
 
         username = request.POST.get('username')
@@ -147,6 +162,7 @@ def user_login(request):
 
         user = authenticate(username=username, password=password)
 
+        # check user is authenticated and their account is active
         if user:
             if user.is_active:
                 login(request, user)
@@ -167,6 +183,7 @@ def user_logout(request):
 
 def trending(request):
 
+    # get 10 most viewed films in last 24hrs
     trending_films = Film.objects.order_by('-views')[:10]
 
     return render(request, 'filmfanatics/trending.html', context={'trending_films': trending_films})
@@ -175,6 +192,7 @@ def search(request):
 
     query = request.GET.get('search')
 
+    # filter films based on search query
     if query:
         films = Film.objects.filter(Q(title__icontains=query))
 
@@ -182,16 +200,23 @@ def search(request):
 
 
 def get_random_film(request):
+
+    # check if correct request
     if request.is_ajax and request.method == "GET":
 
         films = Film.objects.all()
+
+        # get random film
         film = random.choice(films)
+
         # check if the view counter needs reset
         check_reset(film)
+
+        # increment view counter
         film.views += 1
         film.save()
 
-
+        # prepare film and review data for response
         response_data = {}
 
         response_data['title'] = film.title
@@ -204,8 +229,10 @@ def get_random_film(request):
         response_data['average_rating'] = film.average_rating
         response_data['slug'] = film.slug
 
+        # get associated reviews, ordered by revently posted and store them in a list
         getReviews = Review.objects.filter(film=film).order_by('posted_at')
 
+        # store review information in a list
         reviews = [ review.as_dict() for review in getReviews ]
 
         response_data['reviews'] = reviews
@@ -220,18 +247,23 @@ def get_random_film(request):
 @csrf_exempt
 def get_film(request):
 
+    # check if correct request
     if request.is_ajax and request.method == "POST":
 
         response_data = {}
 
+        # get corresponding film
         filmName = request.POST.get('film')
         film = Film.objects.get(title=filmName)
+
         # check if the view counter needs reset
         check_reset(film)
+
+        #increment the view counter
         film.views += 1
         film.save()
 
-
+        # prepare data for response
         response_data['title'] = film.title
         response_data['director'] = film.director
         response_data['cast'] = film.cast
@@ -242,8 +274,10 @@ def get_film(request):
         response_data['average_rating'] = film.average_rating
         response_data['slug'] = film.slug
 
+        # get reviews ordered by recently posted
         getReviews = Review.objects.filter(film=film).order_by('posted_at')
 
+        # store review information in a list
         reviews = [ review.as_dict() for review in getReviews ]
 
         response_data['reviews'] = reviews
@@ -255,18 +289,19 @@ def get_film(request):
 @login_required
 @csrf_exempt
 def check_film(request):
-    print("arrived check")
+
+    # check request
     if request.is_ajax and request.method == "POST":
 
+        # required user and film information from request plus their saved films
         account = Account.objects.get(user=request.user)
         filmName = request.POST.get('name')
         film = Film.objects.get(title=filmName)
 
         saved = account.saved_films.all()
-        print(saved.count())
 
         if film in saved:
-            print("film found")
+            # if the user has the film in their saved films return true to ajax call, otherwise return false
             return HttpResponse(json.dumps({'saved': True, 'slug': film.slug}, default=json_serial), content_type="application/json")
         else:
             return HttpResponse(json.dumps({'saved': False, 'slug': film.slug}, default=json_serial), content_type="application/json")
@@ -275,8 +310,8 @@ def check_film(request):
 
 @login_required
 def save_film(request, film_name_slug):
-    print("arrived")
 
+    # check given film is valid
     try:
         film = Film.objects.get(slug=film_name_slug)
     except Film.DoesNotExist:
@@ -285,15 +320,18 @@ def save_film(request, film_name_slug):
     if film is None:
         redirect(reverse('filmfanatics:home'))
 
+    # check request
     if request.method == 'GET':
 
+        # get account
         account = Account.objects.get(user=request.user)
 
+        # check if the film is in the users saved films
         if film in account.saved_films.all():
-            print("Film is in saved_films")
+            # if so, the button has been pressed to remove it, so do so
             account.saved_films.remove(film)
         else:
-            print("adding film")
+            # otherwise, save the film
             account.saved_films.add(film)
         account.save()
 
@@ -303,6 +341,7 @@ def save_film(request, film_name_slug):
 
 
 def check_reset(film):
+    # helper function called to check if the view count has been reset in the last 24hrs
 
     if (datetime.now(timezone.utc) - film.reset_at).days > 0:
         film.views = 0
@@ -310,6 +349,7 @@ def check_reset(film):
         film.save()
 
 def json_serial(obj):
+    # function to assist with the serialization of datetime objects
 
     if isinstance(obj, (datetime, date)):
         return obj.isoformat()
